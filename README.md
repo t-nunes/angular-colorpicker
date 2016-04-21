@@ -2,7 +2,7 @@
 
 **choose your destination and run this command**
 ```
-$ git clone https://github.com/libgit2/libgit2
+$ git clone https://github.com/thiagofront/angular-colorpicker.git
 ```
 
 after run this command
