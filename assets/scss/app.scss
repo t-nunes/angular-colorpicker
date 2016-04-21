@@ -1,0 +1,31 @@
+// Main Font sans-serif of project
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800);
+
+
+@import "var";
+@import "layout";
+@import "mixins/mixins";
+
+/*
+    --- Vendor ---
+*/
+
+// Core variables and mixins
+@import "vendor/bootstrap/variables";
+@import "vendor/bootstrap/mixins";
+
+// Core CSS
+@import "vendor/bootstrap/grid";
+
+// Utility classes
+@import "vendor/bootstrap/responsive-utilities";
+
+
+/*
+    --- Components ---
+*/
+@import "components/swatch";
+@import "components/color-picker";
+
+
+

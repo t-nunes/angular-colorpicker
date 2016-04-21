@@ -1,0 +1,110 @@
+.my-color-picker{
+    display: flex;
+    padding: 15px;
+    background-color: $color-border;
+    border: 1px solid darken($color-border,20%);
+
+    /* Where goes the colors */
+    .cp-colors{
+        min-width: 0;
+
+        flex-grow: 1;
+
+        position: relative;
+        width: $color-picker-height;
+        height: $color-picker-height;
+        border: 2px solid #000000;
+
+        background-image: linear-gradient(to right, red 0%, #ff0 17%, lime 33%, cyan 50%, blue 66%, #f0f 83%, red 100%);
+
+        &:after{
+            content: '';
+
+            width: 100%;
+            height: 100%;
+
+            position: absolute;
+            top: 0;
+            left: 0;
+
+            background-image: linear-gradient(to bottom, transparent 0%, #FFF 100%);
+        }
+    }
+
+    .cp-slide-darken{
+        position: relative;
+
+        min-width: 0;
+        flex-shrink: 0;
+
+        margin: 0 ($color-picker-arrows-size * 2);
+        width: $color-picker-bar-width;
+        flex-basis: $color-picker-bar-width;
+        height: $color-picker-height;
+
+        border: 2px solid #000000;
+
+        &:after{
+            content: '';
+
+            width: 100%;
+            height: 100%;
+
+            position: absolute;
+            top: 0;
+            left: 0;
+
+            background-image: linear-gradient(to bottom, transparent 0%, #000 100%);
+        }
+
+        .cp-arrows{
+            width: 100%;
+            position: absolute;
+
+            &:after,&:before{
+                content: "";
+                display: inline-block;
+                position: absolute;
+                top: 50%;
+                margin-top: (-($color-picker-arrows-size / 2));
+            }
+
+            &:after{
+                right: 100%;
+                @include caret(right,$color-picker-arrows-size,$color-picker-arrows-color);
+            }
+            &:before{
+                left: 100%;
+                @include caret(left,$color-picker-arrows-size,$color-picker-arrows-color);
+            }
+        }
+    }
+
+
+    .cp-inputs{
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        justify-content: space-between;
+
+        input{
+            padding: 10px;
+            width: 80px;
+            height: 40px;
+            border: 1px solid #000;
+        }
+
+        > label{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            > span{
+                padding: 5px 10px;
+                text-align: right;
+                font-weight: 700;
+            }
+        }
+    }
+
+}

@@ -1,0 +1,28 @@
+*{
+    margin: 0;
+    padding: 0;
+    outline: none;
+
+    box-sizing: border-box;
+
+    &:after,&:before{
+        box-sizing: border-box;
+    }
+}
+
+html{
+    color: $color-text-primary;
+    font-family: $font-family-sans-serif;
+}
+
+.main-title{
+    font-size: 2em;
+    font-weight: 300;
+
+    margin: .5em 0 .7em;
+}
+
+section + section{
+    margin-top: 25px;
+    border-top: 1px solid $color-border;
+}

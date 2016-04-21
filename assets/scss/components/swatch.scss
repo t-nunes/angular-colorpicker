@@ -1,0 +1,63 @@
+.wrap-swatches{
+    margin: 25px (-$swatch-gutter) 0;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.my-swatch{
+    width: (100%/5);
+    padding: $swatch-gutter $swatch-gutter;
+
+    .swatch-color{
+        position: relative;
+        width: 100%;
+        padding-bottom: 100%;
+        border-radius: $swatch-border-radius;
+
+        transition: box-shadow .2s;
+        will-change: box-shadow;
+    }
+
+    > p{
+        padding: .5em;
+        font-weight: 600;
+        text-align: center;
+        text-transform: uppercase;
+        @include text-overflow();
+    }
+
+    /*
+        --- Interactions ---
+    */
+    &:hover{
+        .swatch-color{
+            box-shadow: 0 0 25px rgba(#000,.5);
+        }
+    }
+
+    /*
+        --- States ---
+    */
+
+    &.is-pointer{
+        cursor: pointer;
+
+        &:active{
+            .swatch-color{
+                box-shadow: 0 0 5px rgba(#000,.2) inset;
+
+                &:after{
+                    content: '';
+                    display: block;
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background-color: rgba(#000,.2);
+                }
+            }
+        }
+    }
+
+}

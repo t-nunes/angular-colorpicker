@@ -1,0 +1,28 @@
+/*
+    --- Base Vars ---
+*/
+$font-family-sans-serif : 'Open Sans', 'Arial', sans-serif !default;
+$border-radius          : 2px !default;
+
+// colors
+$color-text-primary     : #37474F !default;
+$color-text-secondary   : rgba($color-text-primary,.58);
+
+$color-border           : #ECEFF1;
+
+
+/*
+    --- Components ---
+*/
+
+// swatch
+$swatch-gutter          : 15px !default;
+$swatch-border-radius   : $border-radius !default;
+
+// color-picker
+$color-picker-height        : 250px;
+
+$color-picker-bar-width     : 45px;
+
+$color-picker-arrows-color  : #000;
+$color-picker-arrows-size   : 8px;
