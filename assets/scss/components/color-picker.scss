@@ -4,6 +4,33 @@
     background-color: $color-border;
     border: 1px solid darken($color-border,20%);
 
+    [class*=cp-bg]{
+        width: 100%;
+        height: 100%;
+
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+
+    .cp-get-color{
+        width: $color-picker-get-color-width;
+        height: $color-picker-get-color-width;
+        margin: (-$color-picker-get-color-width / 2);
+        border: 2px solid rgba(#FFF,.8);
+        display: block;
+        position: absolute;
+
+        border-radius: 50%;
+    }
+
+    .cp-bg-white{
+        background-image: linear-gradient(to bottom, transparent 0%, #FFF 100%);
+    }
+    .cp-bg-black{
+        background-image: linear-gradient(to bottom, transparent 0%, #000 100%);
+    }
+
     /* Where goes the colors */
     .cp-colors{
         min-width: 0;
@@ -15,20 +42,17 @@
         height: $color-picker-height;
         border: 2px solid #000000;
 
-        background-image: linear-gradient(to right, red 0%, #ff0 17%, lime 33%, cyan 50%, blue 66%, #f0f 83%, red 100%);
-
-        &:after{
-            content: '';
-
-            width: 100%;
-            height: 100%;
-
+        .cp-pallete{
             position: absolute;
             top: 0;
             left: 0;
+            width: 100%;
+            height: 100%;
 
-            background-image: linear-gradient(to bottom, transparent 0%, #FFF 100%);
+            background-image: linear-gradient(to right, red 0%, #ff0 17%, lime 33%, cyan 50%, blue 66%, #f0f 83%, red 100%);
         }
+
+
     }
 
     .cp-slide-darken{
@@ -43,19 +67,6 @@
         height: $color-picker-height;
 
         border: 2px solid #000000;
-
-        &:after{
-            content: '';
-
-            width: 100%;
-            height: 100%;
-
-            position: absolute;
-            top: 0;
-            left: 0;
-
-            background-image: linear-gradient(to bottom, transparent 0%, #000 100%);
-        }
 
         .cp-arrows{
             width: 100%;

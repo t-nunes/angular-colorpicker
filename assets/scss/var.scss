@@ -20,9 +20,12 @@ $swatch-gutter          : 15px !default;
 $swatch-border-radius   : $border-radius !default;
 
 // color-picker
-$color-picker-height        : 250px;
+$color-picker-height            : 250px;
+$color-picker-bar-width         : 45px;
+$color-picker-get-color-width   : 10px;
+$color-picker-arrows-size       : 8px;
+$color-picker-arrows-color      : #000;
 
-$color-picker-bar-width     : 45px;
-
-$color-picker-arrows-color  : #000;
-$color-picker-arrows-size   : 8px;
+// input
+$input-height: 42px;
+$input-border-color: #000000;

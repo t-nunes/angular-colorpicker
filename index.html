@@ -4,80 +4,132 @@
         <meta charset="UTF-8">
         <title>Angular - Colorpicker</title>
 
+        <!-- Main font - Open sans
+        <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800' rel='stylesheet' type='text/css'> -->
+
         <!-- Main Style of project -->
         <link rel="stylesheet" href="src/css/app.css"/>
 
     </head>
-    <body ng-controller="colorpickerCrtl">
+    <body>
 
-        <style>.current-color{ background-color: {{currentColor}};}</style>
 
-        <section>
-            <div class="container">
-                <h2 class="main-title">Color Swatches</h2>
+        <div ng-controller="colorpickerCrtl">
+            <style>.current-color{ background-color: {{currentColor.color}};}</style>
 
-                <div class="wrap-swatches">
-                    <div class="my-swatch" ng-repeat="color in colors">
-                        <div class="swatch-color" style="background-color: {{color.color}};"></div>
-                        <p>{{color.name}}</p>
+            <section>
+                <div class="container">
+                    <h2 class="main-title">Color Swatches</h2>
+
+                    <div class="wrap-swatches">
+                        <div class="my-swatch" ng-repeat="color in colors track by $index">
+                            <div class="swatch-color" style="background-color: {{color.color}};"></div>
+                            <p>{{color.name}}</p>
+                        </div>
+
+                        <div class="my-swatch is-pointer" ng-click="addColor()">
+                            <div class="swatch-color current-color"></div>
+                            <p ng-show="currentColor.name">{{currentColor.name}}</p>
+                            <p>Add Color</p>
+                        </div>
+
                     </div>
-
-                    <div class="my-swatch is-pointer">
-                        <div class="swatch-color current-color"></div>
-                        <p>Add Color</p>
-                    </div>
-
                 </div>
-            </div>
-        </section>
+            </section>
 
-        <section>
-            <div class="container">
-                <h2 class="main-title">Add color</h2>
+            <section>
+                <div class="container">
+                    <h2 class="main-title">Add color {{$scope.getColor}}</h2>
 
-                <div class="row">
-                    <div class="col-xs-6">
-                        <div class="my-color-picker">
-                            <div class="cp-colors">
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <div class="my-color-picker">
 
-                            </div>
+                                <!--
+                                    --- Pallete of colors ---
+                                -->
+                                <div class="cp-colors" ng-mouseup="palleteDisable($element)" ng-mousedown="palleteEnable($element)" ng-mousemove="onMovePallete($element,$event)" set-color data-get-color="{{getColor}}">
+                                    <img id="image-colors" src="src/img/map-saturation-white.png" alt="" class="cp-pallete"/>
+                                    <div class="cp-get-color" style="top: {{ getColor.offsetY }}; left: {{ getColor.offsetX }};"></div>
+                                    <div class="cp-bg-white"></div>
+                                </div>
 
-                            <div class="cp-slide-darken current-color">
-                                <div class="cp-arrows">
+                                <!--
+                                    --- Slide darkness --
+                                -->
+                                <div class="cp-slide-darken current-color" slide-darken="$event">
+                                    <div class="cp-arrows"></div>
+                                    <div class="cp-bg-black"></div>
+                                </div>
 
+                                <div class="cp-inputs">
+                                    <label>
+                                        <span>R</span>
+                                        <input type="text" ng-model="currentColor.red" class="cp-red" ng-change="changeRGB()" value="{{currentColor.red}}" maxlength="3"/>
+                                    </label>
+                                    <label>
+                                        <span>G</span>
+                                        <input type="text" ng-model="currentColor.green" class="cp-green" ng-change="changeRGB()" value="{{currentColor.green}}" maxlength="3"/>
+                                    </label>
+                                    <label>
+                                        <span>B</span>
+                                        <input type="text" ng-model="currentColor.blue" class="cp-blue" ng-change="changeRGB()" value="{{currentColor.blue}}" maxlength="3"/>
+                                    </label>
+                                    <label>
+                                        <span>HEX</span>
+                                        <input type="text" ng-model="currentColor.color" class="cp-hex" ng-change="changeHex()" value="{{currentColor.color}}"/>
+                                    </label>
                                 </div>
                             </div>
+                        </div>
+                    </div>
 
-                            <div class="cp-inputs">
-                                <label>
-                                    <span>R</span>
-                                    <input type="text" ng-model="currentRed" class="cp-red" value="{{currentRed}}" maxlength="3"/>
-                                </label>
-                                <label>
-                                    <span>G</span>
-                                    <input type="text" ng-model="currentGreen" class="cp-green" value="{{currentGreen}}" maxlength="3"/>
-                                </label>
-                                <label>
-                                    <span>B</span>
-                                    <input type="text" ng-model="currentBlue" class="cp-blue" value="{{currentBlue}}" maxlength="3"/>
-                                </label>
-                                <label>
-                                    <span>HEX</span>
-                                    <input type="text" ng-model="currentColor" class="cp-hex" value="{{currentColor}}"/>
-                                </label>
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <div class="form-group">
+                                <label>Color name</label>
+                                <input type="text" ng-model="currentColor.name" class="form-control" value="currentColor.name" placeholder="Enter a name for a new color"/>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
+        </div>
 
     </body>
+
+    <!-- jQuery -->
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+
+    <!-- Html2Canvas -->
+    <script src="bower_components/html2canvas/build/html2canvas.min.js"></script>
 
     <!-- Angular JS -->
     <script src="bower_components/angular/angular.min.js"></script>
 
+    <!-- ngTouch -->
+    <script src="bower_components/ngtouch/build/ngTouch.min.js"></script>
+
+    <!-- ngMask -->
+    <script src="bower_components/ngMask/dist/ngMask.min.js"></script>
+
     <!-- MainJs -->
     <script src="scripts/app.js"></script>
+
+    <!--
+        --- Services ---
+    -->
+    <script src="scripts/services/colorpicker.js"></script>
+
+    <!--
+        --- Directives ---
+    -->
+    <script src="scripts/directive/setColor.js"></script>
+    <script src="scripts/directive/slideDarken.js"></script>
+
+    <!--
+        Controllers
+    -->
+    <script src="scripts/controllers/colorpickerCrtl.js"></script>
 
 </html>
