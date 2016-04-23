@@ -1,5 +1,8 @@
 app.controller('colorpickerCrtl', ["$scope", "$colorpicker", function ($scope,$colorpicker) {
 
+    /*
+    *   --- Defaults ---
+    * */
     $scope.colors = $colorpicker.defaultColors;
     $scope.currentColor = $colorpicker.defaultCurrentColor;
 
@@ -9,6 +12,13 @@ app.controller('colorpickerCrtl', ["$scope", "$colorpicker", function ($scope,$c
         offsetY: 0
     };
 
+    $scope.slide = {
+        currentColor: "#FF0000",
+        active: false,
+        percentage: '0%'
+    };
+
+    // Helpers
     var cp = {
 
         hexToRGB: function(hex){
@@ -20,7 +30,6 @@ app.controller('colorpickerCrtl', ["$scope", "$colorpicker", function ($scope,$c
 
             return [r, g, b];
         },
-
         RGBToHex: function (r,g,b) {
 
             var bin = r << 16 | g << 8 | b;
@@ -33,6 +42,18 @@ app.controller('colorpickerCrtl', ["$scope", "$colorpicker", function ($scope,$c
             return $scope.getColor.active;
         },
 
+
+        shadeColor: function(color, percent) {
+
+            var num = parseInt(color,16),
+                amt = Math.round(2.55 * percent),
+                R = (num >> 16) + amt,
+                B = (num >> 8 & 0x00FF) + amt,
+                G = (num & 0x0000FF) + amt;
+
+            return (0x1000000 + (R<255?R<1?0:R:255)*0x10000 + (B<255?B<1?0:B:255)*0x100 + (G<255?G<1?0:G:255)).toString(16).slice(1);
+        },
+
         setPalleteEnabled: function(){
             $scope.getColor.active = true;
         },
@@ -40,22 +61,19 @@ app.controller('colorpickerCrtl', ["$scope", "$colorpicker", function ($scope,$c
             $scope.getColor.active = false;
         },
 
-        setMainColor: function(){
-
+        setSlideEnabled: function(){
+            $scope.slide.active = true;
+        },
+        setSlideDisabled: function(){
+            $scope.slide.active = false;
         },
 
-        shadeColor1: function (color, percent) {
-            var num = parseInt(color, 16),
-                amt = Math.round(2.55 * percent),
-                R = (num >> 16) + amt,
-                G = (num >> 8 & 0x00FF) + amt,
-                B = (num & 0x0000FF) + amt;
-            return (0x1000000 + (R < 255 ? R < 1 ? 0 : R : 255) * 0x10000 + (G < 255 ? G < 1 ? 0 : G : 255) * 0x100 + (B < 255 ? B < 1 ? 0 : B : 255)).toString(16).slice(1);
-        },
-
+        // add cuurent color to swatches
         addCurrentColor: function(){
             $scope.colors.push($scope.currentColor);
         },
+
+        // reset current color
         resetCurrentColor:function(){
             $scope.currentColor = {
                 title: '',
@@ -64,6 +82,11 @@ app.controller('colorpickerCrtl', ["$scope", "$colorpicker", function ($scope,$c
                 green: "0",
                 blue: "0"
             }
+        },
+
+        // reset slide position
+        resetSlidePosition: function(){
+            $scope.slide.percentage = "0%";
         }
     };
 
@@ -73,6 +96,7 @@ app.controller('colorpickerCrtl', ["$scope", "$colorpicker", function ($scope,$c
     $scope.addColor = function(){
         cp.addCurrentColor();
         cp.resetCurrentColor();
+        cp.resetSlidePosition();
     };
 
     $scope.changeHex = function(){
@@ -87,26 +111,21 @@ app.controller('colorpickerCrtl', ["$scope", "$colorpicker", function ($scope,$c
     $scope.changeRGB = function(){
         var hex = cp.RGBToHex($scope.currentColor.red,$scope.currentColor.green,$scope.currentColor.blue);
 
+        cp.resetSlidePosition();
         $scope.currentColor.color = "#" + hex;
     };
 
     // enable scrolling
-    $scope.palleteEnable = function ($pallete) {
-
-        // ativa paleta
+    $scope.palleteEnable = function () {
         cp.setPalleteEnabled();
-
     };
 
     // disable scrolling
-    $scope.palleteDisable = function ($pallete) {
-
-        // desativa paleta
+    $scope.palleteDisable = function () {
         cp.setPalleteDisabled();
-
     };
 
-    $scope.onMovePallete = function ($pallete,$event) {
+    $scope.onMovePallete = function ($event) {
 
         if (cp.isPalleteActive()) {
             var x = parseInt($event.offsetX),
@@ -120,5 +139,25 @@ app.controller('colorpickerCrtl', ["$scope", "$colorpicker", function ($scope,$c
 
     }
 
+    // enable scrolling
+    $scope.slideEnable = function () {
+        cp.setSlideEnabled();
+    };
+
+    // disable scrolling
+    $scope.slideDisable = function () {
+        cp.setSlideDisabled();
+        $scope.currentColor.color = "#" + cp.shadeColor($scope.currentColor.color.split("#")[1], -$scope.slide.percentage);
+        cp.resetSlidePosition();
+    };
+
+    $scope.onMoveSlide = function($event){
+        var height = $event.currentTarget.clientHeight;
+
+        if ( $scope.slide.active ){
+            $scope.slide.percentage = parseInt(($event.offsetY * 100) / height);
+        }
+
+    };
 
 }]);

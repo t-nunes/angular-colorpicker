@@ -19,7 +19,6 @@
     "angular": "~1.5.5",
     "ngtouch": "~1.0.1",
     "jquery": "~2.2.3",
-    "html2canvas": "https://github.com/niklasvh/html2canvas.git#~0.4.1",
     "ngMask": "angular-mask#~3.0.16"
   }
 }

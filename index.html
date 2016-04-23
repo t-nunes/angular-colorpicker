@@ -15,7 +15,10 @@
 
 
         <div ng-controller="colorpickerCrtl">
-            <style>.current-color{ background-color: {{currentColor.color}};}</style>
+            <style>
+                .swatch-active-color{ background-color: {{slide.currentColor}}; }
+                .current-color{ background-color: {{currentColor.color}};}
+            </style>
 
             <section>
                 <div class="container">
@@ -48,7 +51,7 @@
                                 <!--
                                     --- Pallete of colors ---
                                 -->
-                                <div class="cp-colors" ng-mouseup="palleteDisable($element)" ng-mousedown="palleteEnable($element)" ng-mousemove="onMovePallete($element,$event)" set-color data-get-color="{{getColor}}">
+                                <div class="cp-colors" ng-mouseup="palleteDisable()" ng-mousedown="palleteEnable()" ng-mousemove="onMovePallete($event)" set-color data-get-color="{{getColor}}">
                                     <img id="image-colors" src="src/img/map-saturation-white.png" alt="" class="cp-pallete"/>
                                     <div class="cp-get-color" style="top: {{ getColor.offsetY }}; left: {{ getColor.offsetX }};"></div>
                                     <div class="cp-bg-white"></div>
@@ -57,8 +60,8 @@
                                 <!--
                                     --- Slide darkness --
                                 -->
-                                <div class="cp-slide-darken current-color" slide-darken="$event">
-                                    <div class="cp-arrows"></div>
+                                <div class="cp-slide-darken current-color" slide-darken="$event"  ng-mouseup="slideDisable()" ng-mousedown="slideEnable()" ng-mousemove="onMoveSlide($event)">
+                                    <div class="cp-arrows" style="top: {{slide.percentage}}%;"></div>
                                     <div class="cp-bg-black"></div>
                                 </div>
 
@@ -101,9 +104,6 @@
     <!-- jQuery -->
     <script src="bower_components/jquery/dist/jquery.min.js"></script>
 
-    <!-- Html2Canvas -->
-    <script src="bower_components/html2canvas/build/html2canvas.min.js"></script>
-
     <!-- Angular JS -->
     <script src="bower_components/angular/angular.min.js"></script>
 
@@ -125,7 +125,6 @@
         --- Directives ---
     -->
     <script src="scripts/directive/setColor.js"></script>
-    <script src="scripts/directive/slideDarken.js"></script>
 
     <!--
         Controllers
